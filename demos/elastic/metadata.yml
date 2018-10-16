@@ -2,9 +2,9 @@
 profile: default
 
 variables:
-    size: 1
+    size: 10
     from: 0
-    query: "laptop"
+    query: "laptop dell i7"
 
 engines:
     spark-local:
@@ -56,7 +56,6 @@ resources:
         path: /search_keywords_dev2/keyword/
         read:
             options:
-                action: _search
                 query:
                     {
                       "size" : "{{ default.variables.size }}",
@@ -94,45 +93,46 @@ resources:
                         mapping: 
                             total_fields:
                                 limit: 1024
+#                 settings: 
+#                         {
+#                             "index": {
+#                                 "number_of_shards": 1,
+#                                 "number_of_replicas": 4,
+#                                 "mapping": {
+#                                     "total_fields": {
+#                                         "limit": "10000"
+#                                     }
+#                                 }
+#                             }
+#                         }
                 mappings: 
                     doc_type: keyword 
-                    properties:
-                        api_result: integer
-                        count: integer
-                        gg: integer
-                        gg_clicks: double
-                        gg_impressions: double
-                        gg_position: double
-                        pv: integer
-                        pv_impressions: double
-                        pv_position: double
-                        pv_result: double
-                        query: 
-                            type: text
-                            fields:
-                                keyword:
-                                    type: keyword
-                                    ignore_above: 256
-                        query_wo_tones: 
-                            type: text
-                            fields:
-                                keyword:
-                                    type: keyword
-                                    ignore_above: 256
+#                     properties:
+#                         api_result: integer
+#                         count: integer
+#                         gg: integer
+#                         gg_clicks: double
+#                         gg_impressions: double
+#                         gg_position: double
+#                         pv: integer
+#                         pv_impressions: double
+#                         pv_position: double
+#                         pv_result: double
+#                         query: 
+#                             type: text
+#                             fields:
+#                                 keyword:
+#                                     type: keyword
+#                                     ignore_above: 256
+#                         query_wo_tones: 
+#                             type: text
+#                             fields:
+#                                 keyword:
+#                                     type: keyword
+#                                     ignore_above: 256
 
-                    settings_bak: >
-                        {
-                            "index": {
-                                "number_of_shards": 1,
-                                "number_of_replicas": 2,
-                                "mapping": {
-                                    "total_fields": {
-                                        "limit": "100000"
-                                    }
-                                }
-                            }
-                        }
-                    properties_bak: >
+
+                    properties: 
                         {
                             "api_result": {
                                 "type": "double"
@@ -169,7 +169,7 @@ resources:
                                 "fields": {
                                     "keyword": {
                                         "type": "keyword",
-                                        "ignore_above": 256
+                                        "ignore_above": 128
                                     }
                                 }
                             },
@@ -178,7 +178,7 @@ resources:
                                 "fields": {
                                     "keyword": {
                                         "type": "keyword",
-                                        "ignore_above": 256
+                                        "ignore_above": 128
                                     }
                                 }
                             }
