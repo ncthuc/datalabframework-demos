@@ -1,0 +1,142 @@
+---
+profile: default
+
+variables:
+    size: 10
+    from: 0
+    query: "laptop"
+
+engines:
+    spark-local:
+        context: spark
+        config:
+            master: local[*]
+            jobname: 'default'
+
+loggers:
+    severity: info
+    stream:
+        enable: true
+        
+
+providers:
+    local_filesystem:
+        service: local
+        path: data
+        format: csv
+        read:
+            options:
+                header: True
+                inferSchema: True
+
+resources:
+    sales_origin:
+        path: sales.csv
+        provider: local_filesystem
+    sales:
+        path: sales.csv
+        provider: local_filesystem
+        read:
+            mapping:
+                extra:
+                    drop: true
+                ma_vt:
+                    name: sku
+                    type: string
+                ten_vt:
+                    name: name
+                    remove_tones: true
+                    fillna: "unknown"
+                sl_ban_ra:
+                    name: quantity
+                    type: integer
+                    fillna: 0
+                tien_ban_ra:
+                    name: revenue
+                    type: integer
+                    fillna: -1
+                last_date:
+                    name: date
+#                     type: timestamp
+                    type: date
+                year:
+#                     value: "quantity/2"
+                    value: "year(date)"
+                month:
+                    value: "month(date)"
+                day:
+                    value: "day(date)"
+                weekday:
+                    value: "date_format(date, 'EEEE')"
+                    
+                
+    products:
+        path: products.csv
+        provider: local_filesystem
+        read:
+            mapping:
+                abc: 
+                    # rename
+                    name: cde
+                    #casting
+#                     ['byte',
+#                      'short',
+#                      'integer',
+#                      'long',
+#                      'float',
+#                      'double',
+#                      'decimal',
+#                      'string',
+#                      'boolean',
+#                      'timestamp',
+#                      'date',
+#                      'array']
+                    type: string
+                    # removed vietnamese tones, for string only
+                    remove_tones: true
+                    # value to pass to expr() function, for new column only
+                    value: "'value'"
+                    # to fill NA / null value, for exiting column only
+                    fillna: value
+                name:
+                    remove_tones: true
+                watched:
+                    drop: true
+                model2:
+                    drop: true
+                code:
+                    drop: true
+                series:
+                    drop: true
+                variant:
+                    drop: true
+                magento_status:
+                    drop: true
+                status:
+                    drop: true
+                description:
+                    drop: true
+                description_short:
+                    drop: true
+                import_amount:
+                    drop: true
+                import_price:
+                    drop: true
+                import_value:
+                    drop: true
+                promotion_status:
+                    drop: true
+                promotion_price:
+                    drop: true
+                asia_category_code:
+                    drop: true
+                color_name:
+                    drop: true
+                url_key:
+                    drop: true
+                model:
+                    drop: true
+                last_date:
+                    drop: true
+                    
+   
