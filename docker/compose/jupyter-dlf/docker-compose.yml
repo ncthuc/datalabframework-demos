@@ -1,0 +1,21 @@
+version: '3.5'
+services:
+  jupyter:
+    image: ${USERNAME}/datalabframework:latest
+    command: >
+      sh -c "cd /home/jovyan/work/demos/${DEMO}/demo &&
+             start.sh jupyter lab"
+    volumes:
+      - ${WORKDIR}:/home/jovyan/work
+      - ./conf:/conf
+    ports: ["8888:8888"]
+    environment:
+      SPARK_CONF_DIR: /conf
+    networks:
+     - datalabframework
+
+networks:
+  datalabframework:
+    name: datalabframework
+    driver: bridge
+    external: true

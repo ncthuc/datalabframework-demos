@@ -1,10 +1,14 @@
 version: '3.5'
 services:
   jupyter:
-    image: ${REGISTRY}/${USERNAME}/${IMAGENAME}:${IMAGETAG}
-    command: start.sh jupyter lab
+    image: ${USERNAME}/datalabframework:latest
+    command: >
+      sh -c "cd /home/jovyan/work/datalabframework &&
+             make develop &&
+             cd /home/jovyan/work/demos/${DEMO}/demo &&
+             start.sh jupyter lab"
     volumes:
-      - ${PROJECTDIR}:/home/jovyan/demo
+      - ${WORKDIR}:/home/jovyan/work
       - ./conf:/conf
     ports: ["8888:8888"]
     environment:

@@ -12,28 +12,37 @@ This demos require the following tools to be installed
 
 Please refer to the links for the installation
 
-### Build the images
+### Build the docker images
 
-before getting started with the demos, build the images typing `make build`
+Docker images are on dockerhub.
+Look at the `datalabframework-docker` repo for more info
 
 ### How to run the demos
 
-Demos are all located under the `demos` directory. Pick your favorite demo and follow the following steps:
+Demos are all located under the `demos` directory or
+type `make demos` to print the list of the available demos.
 
- - `make up` creates the environment
- - `make run` runs jupyter container in interactive mode
+#### Select your demo
 
-Demo files are mapped inside the container   
-(jupyer webapp is automatically launched during `make run`)
+select a demo by adding `DEMO=<name of the demo>` to the make command.
+List the available demos by typing `make demos`
+
+For example, if the selected demo is `basic`
+
+ - `make up DEMO=basic` creates the environment
+ - `make run DEMO=basic` runs jupyter container in interactive mode
 
 The datalabframework is illustrated via notebooks, and markdown files.
-
 Start by opening the README.md file in the demo directory
 
 ### How to stop the Demos
 
-After running the demo, tear down the environment by typing `make down`
+After running the demo, tear down the environment by typing `make down DEMO=basic`
 
 ### Regression Test
 
 if developing/updateing the demos, run the demos in background mode and check that everything still works. For testing purposes, use `make regression` to test the demo in background mode.
+
+### Develop
+
+if you wish to develop the datalabframework library, this repo acts as integration test suite. add `MODE=dev` to the make commands, for instance: `make run MODE=dev` and `make regression MODE=dev`. This will start the jupyter notebook with the datalabframework package mounted in editable mode.
